@@ -9,22 +9,24 @@ namespace SqlConnection
         private string _connectString;
         MySqlConnection _sqlConnect;
 
-        public SqlConnectBase(string ip, string user, string password)
+        public SqlConnectBase(string ip, string user, string password, string database)
         {
             try
             {
                 _connectString = "server=" + ip
                         + ";uid=" + user
                         + ";pwd=" + password
-                        + ";database=ds"
+                        + ";database=" + database
                         + ";max pool size=1510";
                 _sqlConnect = new MySqlConnection(_connectString);
 
                 if (_sqlConnect.State != ConnectionState.Open)
                     _sqlConnect.Open();
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public bool IsConnected
@@ -71,7 +73,7 @@ namespace SqlConnection
             {
                 if (IsConnected)
                 {
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _sqlConnect))
                     {
                         cmd.ExecuteNonQuery();
                     }
@@ -79,7 +81,7 @@ namespace SqlConnection
                     return true;
                 }
             }
-            catch { }
+            catch (Exception ex) { }
 
             return false;
         }
