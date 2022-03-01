@@ -94,10 +94,8 @@ namespace MySQL_Demo
                 {
                     using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _sqlConnect))
                     {
-                        Console.WriteLine("3");
                         using (MySqlDataReader dr = cmd.ExecuteReader())
                         {
-                            Console.WriteLine($"{dr.FieldCount}");
                             for (int c = 0; c < dr.FieldCount; c++)
                             {
                                 dataTable.Columns.Add(dr.GetName(c));
@@ -107,10 +105,8 @@ namespace MySQL_Demo
                             {
                                 if (dr.HasRows)
                                 {
-                                    Console.WriteLine("hasRow");
                                     dataTable.Rows.Add();
 
-                                    Console.WriteLine($"dr.FileCOunt: {dr.FieldCount}");
                                     for (int c = 0; c < dr.FieldCount; c++)
                                     {
                                         if (dr.GetFieldType(c) == typeof(DateTime))
@@ -118,7 +114,6 @@ namespace MySQL_Demo
                                         else
                                             dataTable.Rows[dataTable.Rows.Count - 1][c] = Convert.ToString(dr[dr.GetName(c)]);
                                     }
-                                    Console.WriteLine($"end");
                                 }
                             }
                         }
@@ -128,7 +123,6 @@ namespace MySQL_Demo
             }
             catch
             {
-
             }
 
             return false;
