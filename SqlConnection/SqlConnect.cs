@@ -2,14 +2,14 @@
 using System;
 using System.Data;
 
-namespace MySQL_Demo
+namespace SqlConnection
 {
-    public class SqlConnect : IDisposable
+    public class SqlConnectBase : IDisposable
     {
         private string _connectString;
         MySqlConnection _sqlConnect;
 
-        public SqlConnect(string ip, string user, string password)
+        public SqlConnectBase(string ip, string user, string password)
         {
             try
             {
